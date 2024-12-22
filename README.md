@@ -54,7 +54,7 @@ This will create 2 (2 ^ 1) subnets and each subnet will have half of original ho
 In case of interruption, we can run the same command and file transmission will resume from where it was interrupted. 
 
 ### <ins>Task 4: HTTPS Configuration</ins>
-We can use <code>ssl_protocols TLSv1.2; <code> in server setup to ensure that TLS 1.2 is enforced and older protocols are disabled.
+We can use <code>ssl_protocols TLSv1.2;</code>  in server setup to ensure that TLS 1.2 is enforced and older protocols are disabled.
 
 Here is an example of server (nginx) setup:
 ```
@@ -84,3 +84,31 @@ server {
     ssl_prefer_server_ciphers on;
 }
 ```
+
+### <ins>Task 5: Troubleshooting Error Messages</ins>
+A "No route to host" error indicated there is a network connectivity issue. 
+There are couple of probable cause for this error.
+Network configuration issue: It might be possible that the network we are trying to reach is set up incorrectly and has incorrect routing, or firewall is blocking port 443 of the network. It is also possible that there is an issue with DNS resolution. 
+It is also possible that server is down or server is not running for port 443, or there is issue with load balancer. 
+
+To resolve this issue, we can begin with basic connectivity tests for server and port.
+```
+# check if network is reachable
+ping example.com
+
+# check for DNS resolution existance
+nslookup example.com
+
+# Check TCP connection to port 443
+telnet example.com 443
+
+# Scan for port status
+nc -zv example.com 443
+```
+
+We can also check if port is being filtered out or not by firewall with this command.
+```
+sudo netstat -tulpn | grep 443
+```
+
+### [ PS: For tasks #2 and #4 I had to google few things about network configuration as I have basic knowledge of networking and network debugging, but I have limited knowledge about setup of a network. I find it interesting and I can work on those skills. ]
