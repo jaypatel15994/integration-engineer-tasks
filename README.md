@@ -13,7 +13,7 @@ It includes steps to reproduce or identify most common issues with form submissi
 ### <ins>Task 2: Network Configuration - Subnet Calculation</ins>
 
 1. Number of available IP address in any /24 network is 256 (2 ^ 8).
-Out of those 256 addresses, two addresses are reserved, and hense, can't be usable.
+Out of those 256 addresses, two addresses are reserved, and hence, can't be usable.
 198.168.0.0 is Network address and 198.168.0.255 is Broadcast address. 
 
 2. If we devide this network in two subnets, each will have 128 addresses.
@@ -29,7 +29,7 @@ This will create 2 (2 ^ 1) subnets and each subnet will have half of original ho
 
 ### <ins>Task 3: File Management</ins>
 
-1. Commands used to do file orerations are as under.
+1. Commands used to do file operations are as under.
     
     (i) - archiving and compressing:
     ```
