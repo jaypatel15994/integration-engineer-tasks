@@ -53,3 +53,34 @@ This will create 2 (2 ^ 1) subnets and each subnet will have half of original ho
 - For rsync command, --partial flag keeps partially transmitted files, and the --progress flag shows progress of a file transfer. 
 In case of interruption, we can run the same command and file transmission will resume from where it was interrupted. 
 
+### <ins>Task 4: HTTPS Configuration</ins>
+We can use <code>ssl_protocols TLSv1.2; <code> in server setup to ensure that TLS 1.2 is enforced and older protocols are disabled.
+
+Here is an example of server (nginx) setup:
+```
+server {
+    listen 443 ssl;
+    server_name demo.com;
+
+    # SSL certificate and key
+    ssl_certificate /etc/nginx/ssl/certificate.crt;
+    ssl_certificate_key /etc/nginx/ssl/private.key;
+
+    # configuration of ssl protocols
+    ssl_protocols TLSv1.2;  # Here we are only allowing TLS 1.2
+    
+    # configuration of cipher suite 
+    ssl_ciphers 'ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256';
+    
+    # security headers
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    
+    # Optimizing SSL configuration
+    ssl_session_timeout 1d;
+    ssl_session_cache shared:SSL:50m;
+    ssl_session_tickets off;
+    
+    # Modern configuration
+    ssl_prefer_server_ciphers on;
+}
+```
