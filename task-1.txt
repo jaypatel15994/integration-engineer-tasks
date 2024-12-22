@@ -1,0 +1,68 @@
+Question: You are debugging a web application where form submissions fail
+intermittently. Use browser developer tools to diagnose the issue.
+Instructions:
+1. Open the developer tools in your browser.
+2. Navigate to the Network tab Identify and describe how you would:
+○ Check the HTTP request and response status codes.
+○ Inspect headers to confirm if data is being sent correctly.
+○ Debug potential CORS (Cross-Origin Resource Sharing) issues.
+
+Answer: 
+To check form submission failure, we will need to check for few things.
+- Check if request type is set correctly or not. (Most often it will be POST)
+- Check for required Headers, Payload and response from the server. 
+- Check console for any Javascript errors.
+
+Here are detailed steps to debug the issue properly. 
+
+    1. Open the Browser's developer tools.
+    On Mac, this can be done with 'Cmd+Option+I'
+    On windows, by pressing F12
+
+    2. Click on the Network tab.
+
+    3. Filter the traffic so only necessary network requests shows up. 
+    Most commonly used are XHR & Fetch. 
+    Also, enable "Preserve log" so that logs are preserved after page refresh.
+
+    4. Submit the form and check the request that is generated after form submission. 
+
+    - Check if request URL is correct or not. 
+    - Check if correct post submission method is used or not. (POST, PUT, GET, etc.)
+    - Check if required headers are set or not in the request. 
+    Commonly used headers are Authorization, Content-Type, or custom headers required by the site request is sent to.
+    - Also check response headers for any errors. 
+        - check for any issues with Access-Control-Allow-Origin for CORS
+        - check Content-Type of response.
+    - Check if required CORS headers are present or not. Some of headers are,
+        - Access-Control-Allow-Origin
+        - Access-Control-Allow-Methods
+        - Access-Control-Allow-Headers
+    - If form is submitting file(s) over the request, check for multipart/form-data Content-Type.
+    - Check the payload of the request being sent and make sure it has all the required fields, and also fields are in correct format. 
+
+    5. Review the resopnse of sent request.
+
+    The response of the form request can help greatly to pinpoint the issue. 
+    Check for HTTP status code. 
+    - If there is 404 status code, the form url is incorrect or invalid. 
+    - If there is 400 status code, there is likely a issue in data of form.
+    - 401 or 403 errors indicate that you do not have required authentication or authorization to access the endpoint. 
+    - 500 Internal server error indicates that server is down, or some other issue with server.
+    - 504 error indicates that there  was server timeout.
+
+    If status code is 200, but error is sent from endpoint, there might be some error explained in the response body.
+
+    You can also check timing tab for delayed responses from server, which means probable performance issue. 
+
+    6. Check Console Tab of Developer tools.
+    - Console tab can indicate if there is any Javascript errors on the page.
+    Common JavaScript errors are Uncaught TypeError, misspelled method names or cross-origin restrictions. 
+
+    7. Retry the same request.
+    You may also copy the failed request (Right click on the failed request and then Copy as cURL) to retry it outside browser. (Like postman)
+    If request works there, it indicates browser specific issues.
+
+
+These are usual steps to debug the issue. Sometimes there can be session related issues, or third party API related issues, 
+which can be identified by closely observing the request in Network Tab.
