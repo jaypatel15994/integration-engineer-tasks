@@ -27,4 +27,29 @@ For a /24 network, first 24 bits are network part and remaining 8 are for host p
 When we subnet to a /25 network, 1 bit (25 - 24) is borrowed from network part.
 This will create 2 (2 ^ 1) subnets and each subnet will have half of original hosts, and borrowed bit becomes part of network identifier.
 
+### <ins>Task 3: File Management</ins>
+
+1. Commands used to do file orerations are as under.
+    
+    (i) - archiving and compressing:
+    ```
+    tar -czvf logs_archive.tar.gz ./logs/
+    ```
+    (ii) - Giving example of both commands for secure transfer.
+    ```
+    rsync -avz --partial --progress logs_archive.tar.gz user@server:/destination/
+    OR
+    scp -C logs_archive.tar.gz user@server:/destination/
+    ```
+    (iii) - Extraction
+    ```
+    # Create directory if doesn't exist, then extract.
+    mkdir -p customerlogs
+
+    tar -xzvf logs_archive.tar.gz -C customerlogs/
+    ```
+
+2. Handling file inturraption
+- For rsync command, --partial flag keeps partially transmitted files, and the --progress flag shows progress of a file transfer. 
+In case of interruption, we can run the same command and file transmission will resume from where it was interrupted. 
 
